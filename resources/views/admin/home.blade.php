@@ -6,13 +6,3 @@
 @section('content')
     ...
 @endsection
-
-@section('css')
-    <link rel="stylesheet" href="/asssets/css/style.css">
-@endsection
-
-@section('js')
-    <script>
-        alert('Rodando!');
-    </script>
-@endsection
