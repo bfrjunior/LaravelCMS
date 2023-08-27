@@ -51,9 +51,10 @@ class LoginController extends Controller
         $data = $request->only([
             'email',
             'password',
-            'remember'
+
         ]);
         $validator = $this->validator($data);
+        $remember = $request->input('remember', false);
 
         if ($validator->fails()) {
             return redirect()->route('login')
@@ -61,7 +62,7 @@ class LoginController extends Controller
                 ->withInput();
         }
 
-        if (Auth::attempt($data)) {
+        if (Auth::attempt($data, $remember)) {
             return redirect()->route('admin');
         } else {
             $validator->errors()->add('password', 'E-mail e/ou senha incorretos!');
