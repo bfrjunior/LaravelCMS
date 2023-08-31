@@ -8,9 +8,15 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Admin\Validate;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +25,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(5);
+        $loggedId = intval(Auth::id());
 
         return view('admin.users.index', [
-            'users' => $users
+            'users' => $users,
+            'loggedId' => $loggedId
         ]);
     }
 
@@ -178,6 +186,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $loggedId = intval(Auth::id());
+        if ($loggedId !== intval($id)) {
+            $user = User::find($id);
+            $user->delete();
+        }
+
+        return redirect()->route('users.index');
     }
 }

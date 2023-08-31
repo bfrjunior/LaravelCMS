@@ -30,8 +30,17 @@
                             <td>
                                 <a href="{{ route('users.edit', ['user' => $user->id]) }}"
                                     class="btn btn-sm btn-info">Editar</a>
-                                <a href="{{ route('users.destroy', ['user' => $user->id]) }}"
-                                    class="btn btn-sm btn-danger">Excluir</a>
+
+                                @if ($loggedId !== intval($user->id))
+                                    <form method="post" class="d-inline"
+                                        action="{{ route('users.destroy', ['user' => $user->id]) }}"
+                                        onsubmit="return confirm('Deseja realmente Excluir?')">
+                                        @method('DELETE')
+                                        @csrf
+
+                                        <button class="btn btn-sm btn-danger">Excluir</button>
+                                    </form>
+                                @endif
                             </td>
 
                         </tr>
