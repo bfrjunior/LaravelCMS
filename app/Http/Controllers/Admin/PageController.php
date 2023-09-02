@@ -4,9 +4,19 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Page;
+use App\User;
 
 class PageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,10 @@ class PageController extends Controller
      */
     public function index()
     {
-        //
+        $pages = Page::paginate(10);
+        return view('admin.pages.index', [
+            'pages' => $pages
+        ]);
     }
 
     /**
