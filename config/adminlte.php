@@ -308,6 +308,7 @@ return [
             'text'        => 'Meus Usuários',
             'url'         => 'painel/users',
             'icon'        => 'far fa-fw fa-file',
+            'can'         => 'edit-users'
 
         ],
 
