@@ -36,12 +36,17 @@ class SettingController extends Controller
         $validator = $this->validator($data);
 
         if ($validator->fails()) {
-
             return redirect()->route('settings')
                 ->withErrors($validator);
         }
-        echo "salvando";
-        //return redirect()->route('settings');
+
+        foreach ($data as $item => $value) {
+            Setting::where('name', $item)->update([
+                'content' => $value
+            ]);
+        }
+        return redirect()->route('settings')
+            ->with('warning', 'Configurações alteradas com sucesso!');
     }
 
     protected function validator($data)
