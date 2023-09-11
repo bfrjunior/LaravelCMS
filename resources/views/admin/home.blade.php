@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@section('plugins.Chartjs', true)
 @section('title', 'Painel')
 @section('content_header')
     <h1>Dashboard</h1>
@@ -9,7 +10,7 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $visitsCount }}</h3>
-                    <p>Visitas</p>
+                    <p>Acessos</p>
                 </div>
                 <div class="icon">
                     <i class="far far-fw fa-eye"></i>
@@ -62,7 +63,7 @@
                     <h3 class="card-tilte">Páginas mais visitadas</h3>
                 </div>
                 <div class="card-body">
-                    ...
+                    <canvas id="pagePie"></canvas>
                 </div>
             </div>
         </div>
@@ -78,4 +79,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.onload = function() {
+            let ctx = document.getElementById('pagePie').getContext('2d');
+            window.pagePie = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: {{ $pageValues }},
+                        backgroundColor: '#0000FF'
+                    }],
+                    labels: {!! $pageLabels !!}
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+        }
+    </script>
 @endsection
