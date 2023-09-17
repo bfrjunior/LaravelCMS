@@ -16,17 +16,23 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $visitsCount = 0;
         $onlineCount = 0;
         $pageCount = 0;
         $userCount = 0;
+        $interval = intval($request->input('interval', 30));
 
         //contagem de visitantes
-        $visitsCount = Visitor::count();
+        $dateInterval = date('Y-m-d H:i:s', strtotime('-' . $interval . ' days'));
+        $visitsCount = Visitor::where('date_access', '>=', $dateInterval)->count();
+        if ($interval > 120) {
+            $interval = 120;
+        }
 
         //contagem de usuários online
+
         $datelimit = date('Y-m-d H:i:s', strtotime('-5 minutes'));
         $onlineList = Visitor::select('ip')->where('date_access', '>=', $datelimit)->groupBy('ip')->get();
         $onlineCount = count($onlineList);
@@ -39,7 +45,8 @@ class HomeController extends Controller
 
         //Contagem para o Pagepie
         $pagePie = [];
-        $visitsAll = Visitor::selectRaw('page,count(page) as c')->groupBy('page')->get();
+        $visitsAll = Visitor::selectRaw('page,count(page) as c')
+            ->where('date_access', '>=', $dateInterval)->groupBy('page')->get();
         foreach ($visitsAll as $visit) {
             $pagePie[$visit['page']] = intval($visit['c']);
         }
@@ -54,7 +61,8 @@ class HomeController extends Controller
             'pageCount' => $pageCount,
             'userCount' => $userCount,
             'pageLabels' => $pageLabels,
-            'pageValues' => $pageValues
+            'pageValues' => $pageValues,
+            'dateInterval' => $interval
         ]);
     }
 }
