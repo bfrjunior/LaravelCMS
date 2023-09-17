@@ -1,0 +1,105 @@
+body{
+    margin:0 0;
+    background-color: #ECECEC;
+    overflow-x: hidden;
+    
+}
+h1{
+    margin: 0 0;
+}
+
+.container{
+
+    background: 
+        linear-gradient(177deg, rgba(160,156,238,0.8)0%, rgba(0,212,255,0.8)72%, rgba(134,255,215,0.8)100%),
+        url("/assets/images/cover.jpg") no-repeat center; 
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-item{
+    width: 700px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.container-item button{
+    width: 120px;
+    padding: 10px 0;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+
+.welcome-container{
+    margin-bottom: 40px;
+}
+.action-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.post-container{
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    margin: auto;   
+
+}
+.post-item{
+    padding: 40px;
+    margin: 50px auto;
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    border-radius:15px;
+}
+
+.post-item a{
+    text-decoration: none;
+    color: black;
+}
+
+.post-body{
+    width: 100%;
+    overflow: hidden;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14;
+    color: rgb(77, 77, 77);
+    
+}
+
+#tinymce{
+    padding: 20px !important; 
+}
+@media (max-width: 700px){
+    .container-item,.post-container{
+        width: 95%;
+    }
+
+}
+
+@media (max-width: 450px){
+    
+    .action-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .post-item{
+        padding: 20px;
+    }
+}
