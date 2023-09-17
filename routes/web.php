@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'Site\HomeController@index');
+Route::get('/', 'Admin\Auth\LoginController@index');
 
 Route::prefix('painel')->group(function () {
     Route::get('/', 'Admin\HomeController@index')->name('admin');
